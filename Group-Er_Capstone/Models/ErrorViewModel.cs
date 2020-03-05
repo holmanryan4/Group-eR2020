@@ -1,6 +1,6 @@
 using System;
 
-namespace Authentication.Models
+namespace Grouper_Capstone.Models
 {
     public class ErrorViewModel
     {
