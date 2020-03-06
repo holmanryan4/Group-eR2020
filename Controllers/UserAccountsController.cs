@@ -21,7 +21,7 @@ namespace Authentication.Controllers
         }
         
 
-        // GET: UserAccounts
+        // GET: UserAccounts/Index
         public async Task<IActionResult> Index()
         {
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -59,8 +59,6 @@ namespace Authentication.Controllers
         }
 
         // POST: UserAccounts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,PhoneNumber,AddressID,WalletId")] UserAccount userAccount)
