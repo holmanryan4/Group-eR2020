@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Authentication.Models;
+using Activity = System.Diagnostics.Activity;
 
 namespace Authentication.Controllers
 {
