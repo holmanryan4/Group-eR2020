@@ -25,7 +25,7 @@ namespace Authentication.Controllers
             var applicationDbContext = _context.Wallet.Include(w => w.memory).Include(w => w.payment).Include(w => w.transactions);
             return View(await applicationDbContext.ToListAsync());
         }
-
+       
         // GET: Wallets/Details/5
         public async Task<IActionResult> Details(int? id)
         {

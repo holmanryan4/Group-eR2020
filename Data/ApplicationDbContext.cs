@@ -19,5 +19,6 @@ namespace Authentication.Data
         public DbSet<Authentication.Models.Transactions> Transactions { get; set; }
         public DbSet<Authentication.Models.UserAccount> UserAccount { get; set; }
         public DbSet<Authentication.Models.Wallet> Wallet { get; set; }
+        public DbSet<Authentication.Models.Activity> Activity { get; set; }
     }
 }
