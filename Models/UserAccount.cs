@@ -10,7 +10,8 @@ namespace Authentication.Models
     public class UserAccount
     {
         [Key]
-        public int Id { get; set; }
+        public int UserId { get; set; }
+        public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int PhoneNumber { get; set; }
@@ -19,9 +20,18 @@ namespace Authentication.Models
         public int AddressID { get; set; }
         public Address address { get; set; }
         [ForeignKey("Wallet")]
-        [Required]
         public int WalletId { get; set; }
         public Wallet wallet { get; set; }
+
+        [ForeignKey("Group")]
+        public int GroupId { get; set; }
+        public Group group { get; set; }
+
+        [ForeignKey("Event Transaction")]
+        public int EventId { get; set; }
+        public Activity activity { get;set; }
+        
+
 
     }
 }

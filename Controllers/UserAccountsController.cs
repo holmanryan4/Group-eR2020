@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Authentication.Data;
 using Authentication.Models;
+using System.Security.Claims;
 
 namespace Authentication.Controllers
 {
@@ -18,12 +19,15 @@ namespace Authentication.Controllers
         {
             _context = context;
         }
+        
 
         // GET: UserAccounts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.UserAccount.Include(u => u.address).Include(u => u.wallet);
-            return View(await applicationDbContext.ToListAsync());
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var applicationDbContext = _context.UserAccount.Include(c => c.address).Include(c => c.FirstName).Include(c => c.LastName);
+            var singleUser = applicationDbContext.Where(c => c.UserName == userId); //Nick Helped, everythings still on fire tho.
+            return View(await singleUser.ToListAsync());
         }
 
         // GET: UserAccounts/Details/5
@@ -37,7 +41,7 @@ namespace Authentication.Controllers
             var userAccount = await _context.UserAccount
                 .Include(u => u.address)
                 .Include(u => u.wallet)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.UserId == id);
             if (userAccount == null)
             {
                 return NotFound();
@@ -97,7 +101,7 @@ namespace Authentication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,PhoneNumber,AddressID,WalletId")] UserAccount userAccount)
         {
-            if (id != userAccount.Id)
+            if (id != userAccount.UserId)
             {
                 return NotFound();
             }
@@ -111,7 +115,7 @@ namespace Authentication.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserAccountExists(userAccount.Id))
+                    if (!UserAccountExists(userAccount.UserId))
                     {
                         return NotFound();
                     }
@@ -138,7 +142,7 @@ namespace Authentication.Controllers
             var userAccount = await _context.UserAccount
                 .Include(u => u.address)
                 .Include(u => u.wallet)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.UserId == id);
             if (userAccount == null)
             {
                 return NotFound();
@@ -160,7 +164,7 @@ namespace Authentication.Controllers
 
         private bool UserAccountExists(int id)
         {
-            return _context.UserAccount.Any(e => e.Id == id);
+            return _context.UserAccount.Any(e => e.UserId == id);
         }
     }
 }

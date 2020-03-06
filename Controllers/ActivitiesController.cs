@@ -10,22 +10,22 @@ using Authentication.Models;
 
 namespace Authentication.Controllers
 {
-    public class PaymentsController : Controller
+    public class ActivitiesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public PaymentsController(ApplicationDbContext context)
+        public ActivitiesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Payments
+        // GET: Activities
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Payment.ToListAsync());
+            return View(await _context.Activity.ToListAsync());
         }
 
-        // GET: Payments/Details/5
+        // GET: Activities/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace Authentication.Controllers
                 return NotFound();
             }
 
-            var payment = await _context.Payment
-                .FirstOrDefaultAsync(m => m.PaymentId == id);
-            if (payment == null)
+            var activity = await _context.Activity
+                .FirstOrDefaultAsync(m => m.ActivityId == id);
+            if (activity == null)
             {
                 return NotFound();
             }
 
-            return View(payment);
+            return View(activity);
         }
 
-        // GET: Payments/Create
+        // GET: Activities/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Payments/Create
+        // POST: Activities/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaymentId,CCNumber,ExpDate,CvcNumber")] Payment payment)
+        public async Task<IActionResult> Create([Bind("ActivityId,Purchases")] Activity activity)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(payment);
+                _context.Add(activity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(payment);
+            return View(activity);
         }
 
-        // GET: Payments/Edit/5
+        // GET: Activities/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace Authentication.Controllers
                 return NotFound();
             }
 
-            var payment = await _context.Payment.FindAsync(id);
-            if (payment == null)
+            var activity = await _context.Activity.FindAsync(id);
+            if (activity == null)
             {
                 return NotFound();
             }
-            return View(payment);
+            return View(activity);
         }
 
-        // POST: Payments/Edit/5
+        // POST: Activities/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,CCNumber,ExpDate,CvcNumber")] Payment payment)
+        public async Task<IActionResult> Edit(int id, [Bind("ActivityId,Purchases")] Activity activity)
         {
-            if (id != payment.PaymentId)
+            if (id != activity.ActivityId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Authentication.Controllers
             {
                 try
                 {
-                    _context.Update(payment);
+                    _context.Update(activity);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PaymentExists(payment.PaymentId))
+                    if (!ActivityExists(activity.ActivityId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace Authentication.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(payment);
+            return View(activity);
         }
 
-        // GET: Payments/Delete/5
+        // GET: Activities/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace Authentication.Controllers
                 return NotFound();
             }
 
-            var payment = await _context.Payment
-                .FirstOrDefaultAsync(m => m.PaymentId == id);
-            if (payment == null)
+            var activity = await _context.Activity
+                .FirstOrDefaultAsync(m => m.ActivityId == id);
+            if (activity == null)
             {
                 return NotFound();
             }
 
-            return View(payment);
+            return View(activity);
         }
 
-        // POST: Payments/Delete/5
+        // POST: Activities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var payment = await _context.Payment.FindAsync(id);
-            _context.Payment.Remove(payment);
+            var activity = await _context.Activity.FindAsync(id);
+            _context.Activity.Remove(activity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PaymentExists(int id)
+        private bool ActivityExists(int id)
         {
-            return _context.Payment.Any(e => e.PaymentId == id);
+            return _context.Activity.Any(e => e.ActivityId == id);
         }
     }
 }
