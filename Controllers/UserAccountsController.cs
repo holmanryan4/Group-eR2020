@@ -74,21 +74,10 @@ namespace Authentication.Controllers
         }
 
         // GET: UserAccounts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var userAccount = await _context.UserAccount.FindAsync(id);
-            if (userAccount == null)
-            {
-                return NotFound();
-            }
-            ViewData["AddressID"] = new SelectList(_context.Address, "AddressId", "AddressId", userAccount.AddressID);
-            ViewData["WalletId"] = new SelectList(_context.Set<Wallet>(), "WalletId", "WalletId", userAccount.WalletId);
-            return View(userAccount);
+            return View();
+               
         }
 
         // POST: UserAccounts/Edit/5
