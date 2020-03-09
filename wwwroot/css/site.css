@@ -69,7 +69,7 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
-<style >
+
 * {
     box-sizing: border-box;
 }
@@ -163,4 +163,4 @@ img {
     }
 }
 
-</style >
+
