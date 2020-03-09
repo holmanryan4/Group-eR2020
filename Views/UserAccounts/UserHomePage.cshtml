@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Authentication.Models.UserAccount>
+﻿@model Authentication.Models.UserAccount
+
 
 @{
     ViewData["Title"] = "Index";
@@ -8,25 +9,65 @@
 <div class="row">
     <div class="col-md-4">
         <h3>Account Details</h3>
-        <div class="container">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Create Event</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Wallet</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="Edit">Update Info</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Account History</a>
-                </li>
-            </ul>
-        </div>
+        
+            <dl class="table">
+                <dt>
+                    @Html.DisplayNameFor(models => models.FirstName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(models => models.FirstName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(models => models.LastName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(models => models.LastName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(models => models.address.StreetAddress)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(models => models.address.StreetAddress)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(models => models.address.City)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(models => models.address.City)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(models => models.address.State)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(models => models.address.State)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(models => models.address.Zipcode)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(models => models.address.Zipcode)
+                </dd>
+            </dl>
+        
+            <div class="container">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Create Event</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Wallet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Edit">Update Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Account History</a>
+                    </li>
+                </ul>
+            </div>
 
 
-    </div>
+</div>
     <div class="col-md-8">
         <h2>Get more libraries</h2>
         <p>
