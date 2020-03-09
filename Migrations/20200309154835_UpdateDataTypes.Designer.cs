@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Authentication.Data.Migrations
+namespace Authentication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200305220915_init")]
-    partial class init
+    [Migration("20200309154835_UpdateDataTypes")]
+    partial class UpdateDataTypes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,205 @@ namespace Authentication.Data.Migrations
                 .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Authentication.Models.Activity", b =>
+                {
+                    b.Property<int>("ActivityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Purchases")
+                        .HasColumnType("float");
+
+                    b.HasKey("ActivityId");
+
+                    b.ToTable("Activity");
+                });
+
+            modelBuilder.Entity("Authentication.Models.Address", b =>
+                {
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Zipcode")
+                        .HasColumnType("int");
+
+                    b.HasKey("AddressId");
+
+                    b.ToTable("Address");
+                });
+
+            modelBuilder.Entity("Authentication.Models.Group", b =>
+                {
+                    b.Property<int>("GroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ActivityId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Balance")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GroupName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GroupId");
+
+                    b.HasIndex("ActivityId");
+
+                    b.ToTable("Group");
+                });
+
+            modelBuilder.Entity("Authentication.Models.Memory", b =>
+                {
+                    b.Property<int>("MemoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Balance")
+                        .HasColumnType("float");
+
+                    b.HasKey("MemoryId");
+
+                    b.ToTable("Memory");
+                });
+
+            modelBuilder.Entity("Authentication.Models.Payment", b =>
+                {
+                    b.Property<int>("PaymentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CCNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CvcNumber")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ExpDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PaymentId");
+
+                    b.ToTable("Payment");
+                });
+
+            modelBuilder.Entity("Authentication.Models.Transactions", b =>
+                {
+                    b.Property<int>("TransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("SentToMemory")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("SentToWallet")
+                        .HasColumnType("bit");
+
+                    b.HasKey("TransactionId");
+
+                    b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("Authentication.Models.UserAccount", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ActivityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AddressID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("WalletId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("AddressID");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("WalletId");
+
+                    b.ToTable("UserAccount");
+                });
+
+            modelBuilder.Entity("Authentication.Models.Wallet", b =>
+                {
+                    b.Property<int>("WalletId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Balance")
+                        .HasColumnType("float");
+
+                    b.Property<int>("MemoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PaymentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TransactionsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("WalletId");
+
+                    b.HasIndex("MemoryId");
+
+                    b.HasIndex("PaymentId");
+
+                    b.HasIndex("TransactionsId");
+
+                    b.ToTable("Wallet");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -219,6 +418,59 @@ namespace Authentication.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Authentication.Models.Group", b =>
+                {
+                    b.HasOne("Authentication.Models.Activity", "activity")
+                        .WithMany()
+                        .HasForeignKey("ActivityId");
+                });
+
+            modelBuilder.Entity("Authentication.Models.UserAccount", b =>
+                {
+                    b.HasOne("Authentication.Models.Activity", "activity")
+                        .WithMany()
+                        .HasForeignKey("ActivityId");
+
+                    b.HasOne("Authentication.Models.Address", "address")
+                        .WithMany()
+                        .HasForeignKey("AddressID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Authentication.Models.Group", "group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Authentication.Models.Wallet", "wallet")
+                        .WithMany()
+                        .HasForeignKey("WalletId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Authentication.Models.Wallet", b =>
+                {
+                    b.HasOne("Authentication.Models.Memory", "memory")
+                        .WithMany()
+                        .HasForeignKey("MemoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Authentication.Models.Payment", "payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Authentication.Models.Transactions", "transactions")
+                        .WithMany()
+                        .HasForeignKey("TransactionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

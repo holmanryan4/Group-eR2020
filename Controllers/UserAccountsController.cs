@@ -66,30 +66,19 @@ namespace Authentication.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(userAccount);
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressID"] = new SelectList(_context.Address, "AddressId", "AddressId", userAccount.AddressID);
+            ViewData["AddressID"] = new SelectList(_context.Set<Address>(), "AddressId", "AddressId", userAccount.AddressID);
             ViewData["WalletId"] = new SelectList(_context.Set<Wallet>(), "WalletId", "WalletId", userAccount.WalletId);
             return View(userAccount);
         }
 
         // GET: UserAccounts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var userAccount = await _context.UserAccount.FindAsync(id);
-            if (userAccount == null)
-            {
-                return NotFound();
-            }
-            ViewData["AddressID"] = new SelectList(_context.Address, "AddressId", "AddressId", userAccount.AddressID);
-            ViewData["WalletId"] = new SelectList(_context.Set<Wallet>(), "WalletId", "WalletId", userAccount.WalletId);
-            return View(userAccount);
+            return View();
+               
         }
 
         // POST: UserAccounts/Edit/5
@@ -163,6 +152,10 @@ namespace Authentication.Controllers
         private bool UserAccountExists(int id)
         {
             return _context.UserAccount.Any(e => e.UserId == id);
+        }
+        public IActionResult UserHomePage()
+        {
+            return View();
         }
     }
 }

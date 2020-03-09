@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Authentication.Data.Migrations
+namespace Authentication.Migrations
 {
-    public partial class init : Migration
+    public partial class fixing : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
