@@ -66,10 +66,10 @@ namespace Authentication.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(userAccount);
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AddressID"] = new SelectList(_context.Address, "AddressId", "AddressId", userAccount.AddressID);
+            ViewData["AddressID"] = new SelectList(_context.Set<Address>(), "AddressId", "AddressId", userAccount.AddressID);
             ViewData["WalletId"] = new SelectList(_context.Set<Wallet>(), "WalletId", "WalletId", userAccount.WalletId);
             return View(userAccount);
         }
