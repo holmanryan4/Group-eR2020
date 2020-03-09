@@ -7,9 +7,9 @@ script
     var slideIndex = 0;
     showSlides();
     
-function showSlides() {
+function showSlides(img) {
   var i;
-    var slides = document.getElementsByClassName("mySlides");
+    var slides = document.getElementsByClassName("images");
     var dots = document.getElementsByClassName("dot");
   for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
