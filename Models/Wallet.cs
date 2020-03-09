@@ -10,7 +10,7 @@ namespace Authentication.Models
     {
         [System.ComponentModel.DataAnnotations.Key]
         public int WalletId { get; set; }
-        public int Balance { get; set; }
+        public double Balance { get; set; }
 
         [ForeignKey("Payment")]
         public int PaymentId { get; set; }

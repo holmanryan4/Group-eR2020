@@ -94,8 +94,8 @@ namespace Authentication.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Balance")
-                        .HasColumnType("int");
+                    b.Property<double>("Balance")
+                        .HasColumnType("float");
 
                     b.HasKey("MemoryId");
 
@@ -115,8 +115,8 @@ namespace Authentication.Data.Migrations
                     b.Property<int>("CvcNumber")
                         .HasColumnType("int");
 
-                    b.Property<int>("ExpDate")
-                        .HasColumnType("int");
+                    b.Property<string>("ExpDate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PaymentId");
 
@@ -166,8 +166,8 @@ namespace Authentication.Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
@@ -195,8 +195,8 @@ namespace Authentication.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Balance")
-                        .HasColumnType("int");
+                    b.Property<double>("Balance")
+                        .HasColumnType("float");
 
                     b.Property<int>("MemoryId")
                         .HasColumnType("int");
