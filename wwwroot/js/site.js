@@ -3,7 +3,7 @@
 // Write your JavaScript code.
 // JavaScript For Slideshow
 
-script
+//script
     var slideIndex = 0;
     showSlides();
     
@@ -23,5 +23,5 @@ function showSlides(img) {
   dots[slideIndex-1].className += " active";
     setTimeout(showSlides, 2000); // Change image every 2 seconds
 
-    <script src="https://apis.google.com/js/platform.js"> <async defer></async></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 }
