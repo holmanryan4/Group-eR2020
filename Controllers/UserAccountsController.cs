@@ -66,7 +66,7 @@ namespace Authentication.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(userAccount);
-                _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AddressID"] = new SelectList(_context.Set<Address>(), "AddressId", "AddressId", userAccount.AddressID);
