@@ -15,8 +15,10 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
 
+
+
 namespace Authentication.Areas.Identity.Pages.Account
-{ 
+{
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
@@ -79,11 +81,15 @@ namespace Authentication.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+
                     return RedirectToAction("Create", "UserAccounts");
                 } 
             }
             // If we got this far, something failed, redisplay form
             return Page();
+
         }
     }
 }
+
+

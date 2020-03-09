@@ -164,5 +164,9 @@ namespace Authentication.Controllers
         {
             return _context.UserAccount.Any(e => e.UserId == id);
         }
+        public IActionResult UserHomePage()
+        {
+            return View();
+        }
     }
 }
