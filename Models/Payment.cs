@@ -11,7 +11,7 @@ namespace Authentication.Models
         [Key]
         public int PaymentId { get; set; }
         public int CCNumber { get; set; }
-        public int ExpDate { get; set; }
+        public string ExpDate { get; set; }
         public int CvcNumber { get; set; }
     }
 }

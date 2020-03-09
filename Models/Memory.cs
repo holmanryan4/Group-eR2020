@@ -10,6 +10,6 @@ namespace Authentication.Models
     {
         [Key]
         public int MemoryId { get; set; }
-        public int Balance { get; set; }
+        public double Balance { get; set; }
     }
 }
