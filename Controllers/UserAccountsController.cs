@@ -61,35 +61,23 @@ namespace Authentication.Controllers
         // POST: UserAccounts/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,PhoneNumber,AddressID,WalletId")] UserAccount userAccount)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,PhoneNumber,AddressID,WalletId")]UserAccount userAccount)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(userAccount);
-                _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
+                return RedirectToAction("UserHomePage","UserAccounts");
             }
-            ViewData["AddressID"] = new SelectList(_context.Set<Address>(), "AddressId", "AddressId", userAccount.AddressID);
-            ViewData["WalletId"] = new SelectList(_context.Set<Wallet>(), "WalletId", "WalletId", userAccount.WalletId);
-            return View(userAccount);
+            
+            return View("UserHomePage", userAccount);
         }
 
         // GET: UserAccounts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit()
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var userAccount = await _context.UserAccount.FindAsync(id);
-            if (userAccount == null)
-            {
-                return NotFound();
-            }
-            ViewData["AddressID"] = new SelectList(_context.Address, "AddressId", "AddressId", userAccount.AddressID);
-            ViewData["WalletId"] = new SelectList(_context.Set<Wallet>(), "WalletId", "WalletId", userAccount.WalletId);
-            return View(userAccount);
+            return View();
+               
         }
 
         // POST: UserAccounts/Edit/5
