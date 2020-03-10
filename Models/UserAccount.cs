@@ -15,21 +15,21 @@ namespace Authentication.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
-        
-        [Required]
+
+        [ForeignKey("Address")]
         public int AddressID { get; set; }
-        public Address address { get; set; }
+        public Address Address { get; set; }
         [ForeignKey("Wallet")]
         public int WalletId { get; set; }
-        public Wallet wallet { get; set; }
+        public Wallet Wallet { get; set; }
 
         [ForeignKey("Group")]
         public int GroupId { get; set; }
-        public Group group { get; set; }
+        public Group Group { get; set; }
 
-        [ForeignKey("Event Transaction")]
+        [ForeignKey("Activity")]
         public int EventId { get; set; }
-        public Activity activity { get;set; }
+        public Activity Activity { get;set; }
         
 
 

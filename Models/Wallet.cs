@@ -14,15 +14,15 @@ namespace Authentication.Models
 
         [ForeignKey("Payment")]
         public int PaymentId { get; set; }
-        public Payment payment { get; set; }
+        public Payment Payment { get; set; }
 
         [ForeignKey("Memory")]
         public int MemoryId { get; set; }
-        public Memory memory { get; set; }
+        public Memory Memory { get; set; }
 
         [ForeignKey("Transactions")]
         public int TransactionsId { get; set; }
-        public Transactions transactions { get; set; }
+        public Transactions Transactions { get; set; }
     }
 }
 

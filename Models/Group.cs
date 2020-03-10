@@ -15,9 +15,9 @@ namespace Authentication.Models
         public double Balance { get; set; }
         public DateTime Date { get; set; }
 
-        [ForeignKey("Event Transaction")]
+        [ForeignKey("Activity")]
         public int EventId { get; set; }
-        public Activity activity { get; set; }
+        public Activity Activity { get; set; }
 
     }
 }

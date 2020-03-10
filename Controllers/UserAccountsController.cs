@@ -66,7 +66,7 @@ namespace Authentication.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(userAccount);
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();
                 return RedirectToAction("UserHomePage","UserAccounts");
             }
             
