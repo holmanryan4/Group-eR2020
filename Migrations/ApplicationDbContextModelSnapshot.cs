@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Authentication.Data.Migrations
+namespace Authentication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -65,9 +65,6 @@ namespace Authentication.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ActivityId")
-                        .HasColumnType("int");
-
                     b.Property<double>("Balance")
                         .HasColumnType("float");
 
@@ -82,7 +79,7 @@ namespace Authentication.Data.Migrations
 
                     b.HasKey("GroupId");
 
-                    b.HasIndex("ActivityId");
+                    b.HasIndex("EventId");
 
                     b.ToTable("Group");
                 });
@@ -148,13 +145,7 @@ namespace Authentication.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ActivityId")
-                        .HasColumnType("int");
-
                     b.Property<int>("AddressID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EventId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -176,8 +167,6 @@ namespace Authentication.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("ActivityId");
 
                     b.HasIndex("AddressID");
 
@@ -420,30 +409,28 @@ namespace Authentication.Data.Migrations
 
             modelBuilder.Entity("Authentication.Models.Group", b =>
                 {
-                    b.HasOne("Authentication.Models.Activity", "activity")
+                    b.HasOne("Authentication.Models.Activity", "Activity")
                         .WithMany()
-                        .HasForeignKey("ActivityId");
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Authentication.Models.UserAccount", b =>
                 {
-                    b.HasOne("Authentication.Models.Activity", "activity")
-                        .WithMany()
-                        .HasForeignKey("ActivityId");
-
-                    b.HasOne("Authentication.Models.Address", "address")
+                    b.HasOne("Authentication.Models.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Authentication.Models.Group", "group")
+                    b.HasOne("Authentication.Models.Group", "Group")
                         .WithMany()
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Authentication.Models.Wallet", "wallet")
+                    b.HasOne("Authentication.Models.Wallet", "Wallet")
                         .WithMany()
                         .HasForeignKey("WalletId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -452,19 +439,19 @@ namespace Authentication.Data.Migrations
 
             modelBuilder.Entity("Authentication.Models.Wallet", b =>
                 {
-                    b.HasOne("Authentication.Models.Memory", "memory")
+                    b.HasOne("Authentication.Models.Memory", "Memory")
                         .WithMany()
                         .HasForeignKey("MemoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Authentication.Models.Payment", "payment")
+                    b.HasOne("Authentication.Models.Payment", "Payment")
                         .WithMany()
                         .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Authentication.Models.Transactions", "transactions")
+                    b.HasOne("Authentication.Models.Transactions", "Transactions")
                         .WithMany()
                         .HasForeignKey("TransactionsId")
                         .OnDelete(DeleteBehavior.Cascade)

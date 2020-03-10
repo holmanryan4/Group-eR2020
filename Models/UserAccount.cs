@@ -27,9 +27,9 @@ namespace Authentication.Models
         public int GroupId { get; set; }
         public Group Group { get; set; }
 
-        [ForeignKey("Activity")]
-        public int EventId { get; set; }
-        public Activity Activity { get;set; }
+        //[ForeignKey("Activity")]
+        //public int EventId { get; set; }
+        //public Activity Activity { get;set; }
         
 
 
