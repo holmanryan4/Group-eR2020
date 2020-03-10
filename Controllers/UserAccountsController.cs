@@ -67,11 +67,7 @@ namespace Authentication.Controllers
             {
                 _context.Add(userAccount);
                 await _context.SaveChangesAsync();
-<<<<<<< HEAD
                 return RedirectToAction(nameof(Index));
-=======
-                return RedirectToAction("UserHomePage","UserAccounts");
->>>>>>> 14cb688cfa491125478c0a1df84d2789d56fd4dd
             }
             
             return View("UserHomePage", userAccount);

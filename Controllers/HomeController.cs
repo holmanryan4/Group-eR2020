@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Authentication.Models;
 using Activity = System.Diagnostics.Activity;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace Authentication.Controllers
 {
@@ -32,8 +34,16 @@ namespace Authentication.Controllers
         {
             return View();
         }
-        public IActionResult Contact()
+        public async Task<IActionResult> ContactAsync()
         {
+            var client = new SendGridClient("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");
+            var from = new EmailAddress("test@gmail.com", "Example User");
+            var subject = "Sending with SendGrid is Fun";
+            var to = new EmailAddress("help.grouper@gmail.com", "Example User");
+            var plainTextContent = "and easy to do anywhere, even with C#";
+            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = await client.SendEmailAsync(msg);
             return View();
         }
 
