@@ -16,13 +16,13 @@
                 @Html.DisplayNameFor(model => model.Balance)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.payment)
+                @Html.DisplayNameFor(model => model.Payment)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.memory)
+                @Html.DisplayNameFor(model => model.Memory)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.transactions)
+                @Html.DisplayNameFor(model => model.Transactions)
             </th>
             <th></th>
         </tr>
@@ -34,13 +34,13 @@
                 @Html.DisplayFor(modelItem => item.Balance)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.payment.PaymentId)
+                @Html.DisplayFor(modelItem => item.Payment.PaymentId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.memory.MemoryId)
+                @Html.DisplayFor(modelItem => item.Memory.MemoryId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.transactions.TransactionId)
+                @Html.DisplayFor(modelItem => item.Transactions.TransactionId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.WalletId">Edit</a> |

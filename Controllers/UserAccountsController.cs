@@ -25,7 +25,7 @@ namespace Authentication.Controllers
         public async Task<IActionResult> Index()
         {
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var applicationDbContext = _context.UserAccount.Include(c => c.address).Include(c => c.FirstName).Include(c => c.LastName);
+            var applicationDbContext = _context.UserAccount.Include(c => c.Address).Include(c => c.FirstName).Include(c => c.LastName);
             var singleUser = applicationDbContext.Where(c => c.UserName == userId); //Nick Helped, everythings still on fire tho.
             return View(await singleUser.ToListAsync());
         }
@@ -39,8 +39,8 @@ namespace Authentication.Controllers
             }
 
             var userAccount = await _context.UserAccount
-                .Include(u => u.address)
-                .Include(u => u.wallet)
+                .Include(u => u.Address)
+                .Include(u => u.Wallet)
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (userAccount == null)
             {
@@ -66,8 +66,13 @@ namespace Authentication.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(userAccount);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction("UserHomePage","UserAccounts");
+
             }
             
             return View("UserHomePage", userAccount);
@@ -126,8 +131,8 @@ namespace Authentication.Controllers
             }
 
             var userAccount = await _context.UserAccount
-                .Include(u => u.address)
-                .Include(u => u.wallet)
+                .Include(u => u.Address)
+                .Include(u => u.Wallet)
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (userAccount == null)
             {
