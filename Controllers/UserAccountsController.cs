@@ -8,26 +8,29 @@ using Microsoft.EntityFrameworkCore;
 using Authentication.Data;
 using Authentication.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace Authentication.Controllers
 {
     public class UserAccountsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public UserAccountsController(ApplicationDbContext context)
+        public UserAccountsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
-        
+
 
         // GET: UserAccounts/Index
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var applicationDbContext = _context.UserAccount.Include(c => c.Address).Include(c => c.FirstName).Include(c => c.LastName);
-            var singleUser = applicationDbContext.Where(c => c.UserName == userId); //Nick Helped, everythings still on fire tho.
-            return View(await singleUser.ToListAsync());
+            var singleUser = applicationDbContext.Where(c => c.UserName == userId); 
+            return View(singleUser.ToListAsync());
         }
 
         // GET: UserAccounts/Details/5
@@ -55,26 +58,37 @@ namespace Authentication.Controllers
         {
             ViewData["AddressID"] = new SelectList(_context.Address, "AddressId", "AddressId");
             ViewData["WalletId"] = new SelectList(_context.Set<Wallet>(), "WalletId", "WalletId");
+            ViewData["IdentityUserId"] = new SelectList(_context.Set<UserAccount>(), "ID", "ID");
             return View();
         }
 
         // POST: UserAccounts/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,PhoneNumber,AddressID,WalletId")]UserAccount userAccount)
+        public async Task<IActionResult> Create(UserAccount userAccount)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(userAccount);
+                //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var user = _userManager.FindByIdAsync(userId).Result;
+                userAccount.UserName = user.Email;
+                userAccount.Wallet = new Wallet() { Balance = 0 };
+                userAccount.Wallet.Payment = new Payment() { CCNumber = 0 };
+                userAccount.Wallet.Transactions = new Transactions() { SentToWallet = false };
+
+                _context.UserAccount.Add(userAccount);
+       
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction ("UserHomePAge", "UserAccounts");
 
-                await _context.SaveChangesAsync();
-                return RedirectToAction("UserHomePage","UserAccounts");
 
             }
-            
+            ViewData["UserId"] = new SelectList(_context.Set<UserAccount>(), "AddressID", "AddressID", userAccount.AddressID);
+            ViewData["UserId"] = new SelectList(_context.Set<Wallet>(), "WalletId", "WalletId", userAccount.WalletId);
+            ViewData["UserId"] = new SelectList(_context.Set<Payment>(), "PaymentId", "PaymentId", userAccount.Wallet.PaymentId);
+            ViewData["IdentityUserId"] = new SelectList(_context.Set<UserAccount>(), "ID", "ID");
             return View("UserHomePage", userAccount);
         }
 
@@ -85,9 +99,7 @@ namespace Authentication.Controllers
                
         }
 
-        // POST: UserAccounts/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,PhoneNumber,AddressID,WalletId")] UserAccount userAccount)
@@ -159,7 +171,26 @@ namespace Authentication.Controllers
         }
         public IActionResult UserHomePage()
         {
-            return View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _userManager.FindByIdAsync(userId).Result;
+            var userAccount = user.Email;
+            if (userAccount == null)
+            {
+                return Create();
+            }
+
+            var User = _context.UserAccount
+                .Include(u => u.Address)
+                .Include(g => g.Group)
+                .Include(w => w.Wallet)
+                .Include(p => p.Wallet.Payment)
+                .Where(x => x.UserName == userAccount).FirstOrDefaultAsync();
+            if (User == null)
+            {
+                return Create();
+            }
+            
+            return View(User);
         }
     }
 }

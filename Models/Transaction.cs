@@ -12,5 +12,6 @@ namespace Authentication.Models
         public int TransactionId { get; set; }
         public bool SentToMemory { get; set; }
         public bool SentToWallet { get; set; }
+        public double TransAmount { get; set; }
     }
 }

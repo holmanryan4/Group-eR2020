@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Authentication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200310124535_initial")]
-    partial class initial
+    [Migration("20200311181440_Update")]
+    partial class Update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,6 +34,21 @@ namespace Authentication.Migrations
                     b.HasKey("ActivityId");
 
                     b.ToTable("Activity");
+                });
+
+            modelBuilder.Entity("Authentication.Models.ActivityTrnsaction", b =>
+                {
+                    b.Property<int>("TransationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Purchases")
+                        .HasColumnType("float");
+
+                    b.HasKey("TransationId");
+
+                    b.ToTable("ActivityTrnsaction");
                 });
 
             modelBuilder.Entity("Authentication.Models.Address", b =>
@@ -67,38 +82,23 @@ namespace Authentication.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ActivityId")
+                        .HasColumnType("int");
+
                     b.Property<double>("Balance")
                         .HasColumnType("float");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
                     b.Property<string>("GroupName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("GroupId");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("ActivityId");
 
                     b.ToTable("Group");
-                });
-
-            modelBuilder.Entity("Authentication.Models.Memory", b =>
-                {
-                    b.Property<int>("MemoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("Balance")
-                        .HasColumnType("float");
-
-                    b.HasKey("MemoryId");
-
-                    b.ToTable("Memory");
                 });
 
             modelBuilder.Entity("Authentication.Models.Payment", b =>
@@ -134,6 +134,9 @@ namespace Authentication.Migrations
 
                     b.Property<bool>("SentToWallet")
                         .HasColumnType("bit");
+
+                    b.Property<double>("TransAmount")
+                        .HasColumnType("float");
 
                     b.HasKey("TransactionId");
 
@@ -179,6 +182,21 @@ namespace Authentication.Migrations
                     b.ToTable("UserAccount");
                 });
 
+            modelBuilder.Entity("Authentication.Models.UserGroup", b =>
+                {
+                    b.Property<int>("UserAccountId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserAccountId", "GroupId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("UserGroups");
+                });
+
             modelBuilder.Entity("Authentication.Models.Wallet", b =>
                 {
                     b.Property<int>("WalletId")
@@ -189,9 +207,6 @@ namespace Authentication.Migrations
                     b.Property<double>("Balance")
                         .HasColumnType("float");
 
-                    b.Property<int>("MemoryId")
-                        .HasColumnType("int");
-
                     b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
@@ -199,8 +214,6 @@ namespace Authentication.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("WalletId");
-
-                    b.HasIndex("MemoryId");
 
                     b.HasIndex("PaymentId");
 
@@ -413,7 +426,7 @@ namespace Authentication.Migrations
                 {
                     b.HasOne("Authentication.Models.Activity", "Activity")
                         .WithMany()
-                        .HasForeignKey("EventId")
+                        .HasForeignKey("ActivityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -439,14 +452,23 @@ namespace Authentication.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Authentication.Models.Wallet", b =>
+            modelBuilder.Entity("Authentication.Models.UserGroup", b =>
                 {
-                    b.HasOne("Authentication.Models.Memory", "Memory")
-                        .WithMany()
-                        .HasForeignKey("MemoryId")
+                    b.HasOne("Authentication.Models.Group", "Group")
+                        .WithMany("UserGroups")
+                        .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Authentication.Models.UserAccount", "UserAccount")
+                        .WithMany("UserGroups")
+                        .HasForeignKey("UserAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Authentication.Models.Wallet", b =>
+                {
                     b.HasOne("Authentication.Models.Payment", "Payment")
                         .WithMany()
                         .HasForeignKey("PaymentId")

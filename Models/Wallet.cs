@@ -16,9 +16,7 @@ namespace Authentication.Models
         public int PaymentId { get; set; }
         public Payment Payment { get; set; }
 
-        [ForeignKey("Memory")]
-        public int MemoryId { get; set; }
-        public Memory Memory { get; set; }
+        
 
         [ForeignKey("Transactions")]
         public int TransactionsId { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,14 +24,18 @@ namespace Authentication.Models
         public int WalletId { get; set; }
         public Wallet Wallet { get; set; }
 
-        [ForeignKey("Group")]
+        [ForeignKey("GroupId")]
         public int GroupId { get; set; }
         public Group Group { get; set; }
+
+
+        public virtual ICollection<UserGroup> UserGroups { get; set; }
+
 
         //[ForeignKey("Activity")]
         //public int EventId { get; set; }
         //public Activity Activity { get;set; }
-        
+
 
 
     }

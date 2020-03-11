@@ -16,8 +16,11 @@ namespace Authentication.Models
         public DateTime Date { get; set; }
 
         [ForeignKey("Activity")]
-        public int EventId { get; set; }
+        public int ActivityId { get; set; }
         public Activity Activity { get; set; }
+
+        public virtual ICollection<UserGroup> UserGroups { get; set; }
+
 
     }
 }
