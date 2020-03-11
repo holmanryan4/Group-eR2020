@@ -31,23 +31,23 @@ namespace Authentication.Controllers
 
         public IActionResult Index()
         {
-            var user = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = _userManager.FindByIdAsync(user).Result;
-            var userAcct = userId;
+            //var user = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var userId = _userManager.FindByIdAsync(user).Result;
+            //var userAcct = userId;
                        
-            if (User.IsInRole("UserAccount") && userAcct == null)
-            {
-                return RedirectToAction("Create", "UserAccounts");
-            }
-            else if (userAcct != null)
-            {
+            //if (User.IsInRole("UserAccount") && userAcct == null)
+            //{
+            //    return RedirectToAction("Create", "UserAccounts");
+            //}
+            //else if (userAcct != null)
+            //{
 
-                return RedirectToAction("UserHomePage", "UserAccounts");
-            }
-            else
-            {
+            //    return RedirectToAction("UserHomePage", "UserAccounts");
+            //}
+            //else
+            //{
                 return View();
-            }
+            //}
         }
 
         public IActionResult Privacy()

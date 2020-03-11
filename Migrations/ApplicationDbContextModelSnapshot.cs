@@ -15,7 +15,7 @@ namespace Authentication.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -32,21 +32,6 @@ namespace Authentication.Migrations
                     b.HasKey("ActivityId");
 
                     b.ToTable("Activity");
-                });
-
-            modelBuilder.Entity("Authentication.Models.ActivityTrnsaction", b =>
-                {
-                    b.Property<int>("TransationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("Purchases")
-                        .HasColumnType("float");
-
-                    b.HasKey("TransationId");
-
-                    b.ToTable("ActivityTrnsaction");
                 });
 
             modelBuilder.Entity("Authentication.Models.Address", b =>
@@ -178,21 +163,6 @@ namespace Authentication.Migrations
                     b.HasIndex("WalletId");
 
                     b.ToTable("UserAccount");
-                });
-
-            modelBuilder.Entity("Authentication.Models.UserGroup", b =>
-                {
-                    b.Property<int>("UserAccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserAccountId", "GroupId");
-
-                    b.HasIndex("GroupId");
-
-                    b.ToTable("UserGroups");
                 });
 
             modelBuilder.Entity("Authentication.Models.Wallet", b =>
@@ -446,21 +416,6 @@ namespace Authentication.Migrations
                     b.HasOne("Authentication.Models.Wallet", "Wallet")
                         .WithMany()
                         .HasForeignKey("WalletId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Authentication.Models.UserGroup", b =>
-                {
-                    b.HasOne("Authentication.Models.Group", "Group")
-                        .WithMany("UserGroups")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Authentication.Models.UserAccount", "UserAccount")
-                        .WithMany("UserGroups")
-                        .HasForeignKey("UserAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

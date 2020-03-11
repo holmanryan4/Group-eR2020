@@ -29,7 +29,7 @@ namespace Authentication.Controllers
         {
             string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var applicationDbContext = _context.UserAccount.Include(c => c.Address).Include(c => c.FirstName).Include(c => c.LastName);
-            var singleUser = applicationDbContext.Where(c => c.UserName == userId); 
+            var singleUser = applicationDbContext.Where(c => c.UserName == userId); //Nick Helped, everythings still on fire tho.
             return View(singleUser.ToListAsync());
         }
 
@@ -76,7 +76,6 @@ namespace Authentication.Controllers
                 userAccount.Wallet = new Wallet() { Balance = 0 };
                 userAccount.Wallet.Payment = new Payment() { CCNumber = 0 };
                 userAccount.Wallet.Transactions = new Transactions() { SentToWallet = false };
-
                 _context.UserAccount.Add(userAccount);
        
 
@@ -99,7 +98,9 @@ namespace Authentication.Controllers
                
         }
 
-        
+        // POST: UserAccounts/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,PhoneNumber,AddressID,WalletId")] UserAccount userAccount)

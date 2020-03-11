@@ -29,7 +29,7 @@ namespace Authentication.Models
         public Group Group { get; set; }
 
 
-        public virtual ICollection<UserGroup> UserGroups { get; set; }
+        //public virtual ICollection<UserGroup> UserGroups { get; set; }
 
 
         //[ForeignKey("Activity")]
