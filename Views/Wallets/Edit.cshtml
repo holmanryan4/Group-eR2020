@@ -23,12 +23,7 @@
                 <select asp-for="PaymentId" class="form-control" asp-items="ViewBag.PaymentId"></select>
                 <span asp-validation-for="PaymentId" class="text-danger"></span>
             </div>
-           
-            <div class="form-group">
-                <label asp-for="TransactionsId" class="control-label"></label>
-                <select asp-for="TransactionsId" class="form-control" asp-items="ViewBag.TransactionsId"></select>
-                <span asp-validation-for="TransactionsId" class="text-danger"></span>
-            </div>
+         
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
