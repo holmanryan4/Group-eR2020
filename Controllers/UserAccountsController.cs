@@ -173,11 +173,9 @@ namespace Authentication.Controllers
         public IActionResult UserHomePage()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = _userManager.FindByIdAsync(userId).Result;
-            var userAccount = user;
-            if (userAccount == null)
+            if (userId == null)
             {
-                return Create();
+                return RedirectToPage("Login");
             }
 
             var User = _context.UserAccount
@@ -185,10 +183,10 @@ namespace Authentication.Controllers
                 .Include(g => g.Group)
                 .Include(w => w.Wallet)
                 .Include(p => p.Wallet.Payment)
-                .Where(x => x.UserName == userAccount.UserName).FirstOrDefaultAsync();
-            if (User == null)
+                .Where(x => x.UserName == userId).FirstOrDefaultAsync();
+            if (userId == null)
             {
-                return Create();
+                return RedirectToPage("Create");
             }
             
             return View(User);
