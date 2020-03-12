@@ -10,7 +10,7 @@ namespace Authentication.Models
     {
         [Key]
         public int ActivityId {get;set;}
-        public string  Name { get; set; }
+        public string Name { get; set; }
         public string Address { get; set; }
         public DateTime Date { get; set; }
         public double Purchases { get; set; }

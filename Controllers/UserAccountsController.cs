@@ -75,7 +75,7 @@ namespace Authentication.Controllers
                 userAccount.UserName = user.Email;
                 userAccount.Wallet = new Wallet() { Balance = 0 };
                 userAccount.Wallet.Payment = new Payment() { CCNumber = 0 };
-                userAccount.Wallet.Transactions = new Transactions() { SentToWallet = false };
+                //userAccount.Wallet.Transactions = new Transactions() { SentToWallet = false };
                 _context.UserAccount.Add(userAccount);
        
 

@@ -53,10 +53,11 @@ namespace Authentication.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ActivityId,Purchases")] Activity activity)
+        public async Task<IActionResult> Create( Activity activity)
         {
             if (ModelState.IsValid)
             {
+                activity.Purchases = 0;
                 _context.Add(activity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

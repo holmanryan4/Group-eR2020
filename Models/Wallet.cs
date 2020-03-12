@@ -17,6 +17,7 @@ namespace Authentication.Models
         public Payment Payment { get; set; }
 
         
+        //Removing key and table for the time being 
         /*
         [ForeignKey("Transactions")]
         public int TransactionsId { get; set; }
