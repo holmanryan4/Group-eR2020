@@ -69,10 +69,13 @@ namespace Authentication.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier)
-                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var user = _userManager.FindByIdAsync(userId).Result;
                 
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                var user = _userManager.FindByIdAsync(userId).Result;
+
+                userAccount.UserName = userId;
+
                 userAccount.Wallet = new Wallet() { Balance = 0 };
                 userAccount.Wallet.Payment = new Payment() { CCNumber = 0 };
                 userAccount.UserName = user.Email;
@@ -180,12 +183,12 @@ namespace Authentication.Controllers
             }
 
             var User = _context.UserAccount
-                .Include(u => u.Address)
-                .Include(g => g.Group)
-                .Include(w => w.Wallet)
-                .Include(p => p.Wallet.Payment)
+                .Include("Address")
+                .Include("Group")
+                .Include("Wallet")
+                .Include("Wallet.Payment")
                 .Where(x => x.UserName == userId).FirstOrDefaultAsync();
-            if (userId == null)
+            if (User == null)
             {
                 return RedirectToPage("Create");
             }

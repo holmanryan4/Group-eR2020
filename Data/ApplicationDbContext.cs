@@ -13,10 +13,12 @@ namespace Authentication.Data
             : base(options)
         {
         }
+
+
+
         public DbSet<Authentication.Models.Address> Address { get; set; }
-        
+        public DbSet<UserAccountGroup> UserAccountGroups { get; set; }
         public DbSet<Authentication.Models.Payment> Payment { get; set; }
-        public DbSet<Authentication.Models.Transactions> Transactions { get; set; }
         public DbSet<Authentication.Models.UserAccount> UserAccount { get; set; }
         public DbSet<Authentication.Models.Wallet> Wallet { get; set; }
         public DbSet<Authentication.Models.Activity> Activity { get; set; }

@@ -4,14 +4,16 @@ using Authentication.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Authentication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200312192749_AddedJunctionTable")]
+    partial class AddedJunctionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,8 +116,26 @@ namespace Authentication.Migrations
                     b.ToTable("Payment");
                 });
 
+            modelBuilder.Entity("Authentication.Models.Transactions", b =>
+                {
+                    b.Property<int>("TransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-       
+                    b.Property<bool>("SentToMemory")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("SentToWallet")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("TransAmount")
+                        .HasColumnType("float");
+
+                    b.HasKey("TransactionId");
+
+                    b.ToTable("Transactions");
+                });
 
             modelBuilder.Entity("Authentication.Models.UserAccount", b =>
                 {
@@ -129,7 +149,6 @@ namespace Authentication.Migrations
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
-
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -147,12 +166,10 @@ namespace Authentication.Migrations
 
                     b.HasIndex("AddressID");
 
-
                     b.HasIndex("WalletId");
 
                     b.ToTable("UserAccount");
                 });
-
 
             modelBuilder.Entity("Authentication.Models.UserAccountGroup", b =>
                 {
@@ -174,7 +191,6 @@ namespace Authentication.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserAccountGroups");
-
                 });
 
             modelBuilder.Entity("Authentication.Models.Wallet", b =>
@@ -414,8 +430,6 @@ namespace Authentication.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-
-
                     b.HasOne("Authentication.Models.Wallet", "Wallet")
                         .WithMany()
                         .HasForeignKey("WalletId")
@@ -427,17 +441,13 @@ namespace Authentication.Migrations
                 {
                     b.HasOne("Authentication.Models.Group", "Group")
                         .WithMany("UserAccountGroups")
-
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-
-
                     b.HasOne("Authentication.Models.UserAccount", "UserAccount")
                         .WithMany("UserAccountGroups")
                         .HasForeignKey("UserId")
-
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

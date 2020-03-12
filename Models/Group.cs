@@ -19,7 +19,7 @@ namespace Authentication.Models
         public int ActivityId { get; set; }
         public Activity Activity { get; set; }
 
-        //public virtual ICollection<UserGroup> UserGroups { get; set; }
+        public ICollection<UserAccountGroup> UserAccountGroups { get; set; }
 
 
     }

@@ -85,7 +85,7 @@ namespace Authentication.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ActivityId,Purchases")] Activity activity)
+        public async Task<IActionResult> Edit(int id, Activity activity)
         {
             if (id != activity.ActivityId)
             {
