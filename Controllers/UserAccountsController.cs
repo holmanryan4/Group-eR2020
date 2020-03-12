@@ -182,7 +182,6 @@ namespace Authentication.Controllers
 
             var User = _context.UserAccount
                 .Include(u => u.Address)
-                .Include(g => g.Group)
                 .Include(w => w.Wallet)
                 .Include(p => p.Wallet.Payment)
                 .Where(x => x.UserName == userAccount.UserName).FirstOrDefaultAsync();

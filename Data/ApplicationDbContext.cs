@@ -13,8 +13,23 @@ namespace Authentication.Data
             : base(options)
         {
         }
+
+//        protected override void OnModelCreating(ModelBuilder modelBuilder)
+//{
+//    //modelBuilder.Entity<UserAccountGroup>()
+//    //    .HasKey(uag => new { uag.UserId, uag.GroupId });  
+//    //modelBuilder.Entity<UserAccountGroup>()
+//    //    .HasOne(uag => uag.UserAccount)
+//    //    .WithMany(ua => ua.UserAccountGroups)
+//    //    .HasForeignKey(uag => uag.UserId);  
+//    //modelBuilder.Entity<UserAccountGroup>()
+//    //    .HasOne(uag => uag.Group)
+//    //    .WithMany(g => g.UserAccountGroups)
+//    //    .HasForeignKey(uag => uag.GroupId);
+//}
+
         public DbSet<Authentication.Models.Address> Address { get; set; }
-        
+        public DbSet<UserAccountGroup> UserAccountGroups { get; set; }
         public DbSet<Authentication.Models.Payment> Payment { get; set; }
         public DbSet<Authentication.Models.Transactions> Transactions { get; set; }
         public DbSet<Authentication.Models.UserAccount> UserAccount { get; set; }
