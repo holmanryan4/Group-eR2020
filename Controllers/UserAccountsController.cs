@@ -174,7 +174,7 @@ namespace Authentication.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _userManager.FindByIdAsync(userId).Result;
-            var userAccount = user.Email;
+            var userAccount = user;
             if (userAccount == null)
             {
                 return Create();
@@ -185,7 +185,7 @@ namespace Authentication.Controllers
                 .Include(g => g.Group)
                 .Include(w => w.Wallet)
                 .Include(p => p.Wallet.Payment)
-                .Where(x => x.UserName == userAccount).FirstOrDefaultAsync();
+                .Where(x => x.UserName == userAccount.UserName).FirstOrDefaultAsync();
             if (User == null)
             {
                 return Create();
