@@ -23,8 +23,6 @@ namespace Authentication.Models
         [ForeignKey("Wallet")]
         public int WalletId { get; set; }
         public Wallet Wallet { get; set; }
-
-        [ForeignKey("GroupId")]
         public int GroupId { get; set; }
         public Group Group { get; set; }
 

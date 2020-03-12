@@ -72,16 +72,17 @@ namespace Authentication.Controllers
                 //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier)
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var user = _userManager.FindByIdAsync(userId).Result;
-                userAccount.UserName = user.Email;
+                
                 userAccount.Wallet = new Wallet() { Balance = 0 };
                 userAccount.Wallet.Payment = new Payment() { CCNumber = 0 };
+                userAccount.UserName = user.Email;
                 //userAccount.Wallet.Transactions = new Transactions() { SentToWallet = false };
                 _context.UserAccount.Add(userAccount);
-       
 
-                await _context.SaveChangesAsync();
+                
+                _context.SaveChangesAsync();
                 return RedirectToAction ("UserHomePAge", "UserAccounts");
-
+                
 
             }
             ViewData["UserId"] = new SelectList(_context.Set<UserAccount>(), "AddressID", "AddressID", userAccount.AddressID);
@@ -170,7 +171,7 @@ namespace Authentication.Controllers
         {
             return _context.UserAccount.Any(e => e.UserId == id);
         }
-        public IActionResult UserHomePage()
+        public IActionResult UserHomePage(int id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null)
