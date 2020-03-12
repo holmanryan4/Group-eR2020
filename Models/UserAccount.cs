@@ -24,12 +24,13 @@ namespace Authentication.Models
         public int WalletId { get; set; }
         public Wallet Wallet { get; set; }
 
+        /*
         [ForeignKey("GroupId")]
         public int GroupId { get; set; }
         public Group Group { get; set; }
+        */
 
-
-        //public virtual ICollection<UserGroup> UserGroups { get; set; }
+        public  ICollection<UserAccountGroup> UserAccountGroups { get; set; }
 
 
         //[ForeignKey("Activity")]

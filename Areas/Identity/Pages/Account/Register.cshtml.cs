@@ -76,10 +76,17 @@ namespace Authentication.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            //trashcollector stuff here?
+                //to redirect to create page can we use the indenity
+
             if (ModelState.IsValid)
                 _logger.LogInformation("User created a new account with password.");
             var user = new IdentityUser { Email = Input.Email, UserName = Input.Email };
             await _userManager.CreateAsync(user, Input.Password);
+
+
+
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var callbackUrl = Url.Page(

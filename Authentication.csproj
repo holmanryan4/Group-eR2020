@@ -12,6 +12,11 @@
     <None Remove="wwwroot\API%27s\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20200312152830_AddedProperties.cs" />
+    <Compile Remove="Migrations\20200312152830_AddedProperties.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.0" />
