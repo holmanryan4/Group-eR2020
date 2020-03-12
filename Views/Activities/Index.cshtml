@@ -4,32 +4,29 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+    <h1>Group-eR Extravaganz</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Purchases)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Purchases)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ActivityId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ActivityId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ActivityId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-md-4">
+        <h3>Events Itinerary </h3>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h5>Need a Lyft?</h5>
+        <br>
+        <iframe width="275" height="70" sandbox="allow-scripts allow-forms allow-top-navigation-by-user-activation"
+                src="https://cdn.lyft.com/static/widgets/embed.html?location_street_address=5708%20n%2078th%20street&location_city=Milwaukee&location_postal_code=53222&theme=&button_size=&referrer=https%3A%2F%2Flocalhost%3A44356&text_color="
+                frameborder=0></iframe>
+    </div>
+
+
+    </div>
+    <div class="col-md-8">
+        <h4></h4>
+
+
+
+    </div>
+
+</div>
