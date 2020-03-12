@@ -17,10 +17,11 @@ namespace Authentication.Models
         public Payment Payment { get; set; }
 
         
-
+        /*
         [ForeignKey("Transactions")]
         public int TransactionsId { get; set; }
         public Transactions Transactions { get; set; }
+        */
     }
 }
 
